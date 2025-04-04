@@ -10,7 +10,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.image.ImageView;
 import java.io.File;
 
-public class MediaManager {
+public class MediaManager
+{
 
     private CanvasManager canvasManager;
     private MediaPlayer mediaPlayer;
@@ -18,7 +19,8 @@ public class MediaManager {
     private ImageView imageView;
     private Label mediaLabel;
 
-    public MediaManager(CanvasManager canvasManager) {
+    public MediaManager(CanvasManager canvasManager)
+    {
         this.canvasManager = canvasManager;
         this.mediaLabel = new Label();
         this.mediaLabel.setTextFill(Color.BLACK); // Make text readable on light backgrounds
@@ -64,12 +66,15 @@ public class MediaManager {
         });
 
         // Video button functionality
-        videoButton.setOnAction(e -> {
+        videoButton.setOnAction(e ->
+        {
             FileChooser fileChooser = new FileChooser();
             fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Video Files", "*.mp4", "*.avi", "*.mkv"));
             File file = fileChooser.showOpenDialog(null);
-            if (file != null) {
-                try {
+            if (file != null)
+            {
+                try
+                {
                     // Load video into the media player
                     Media media = new Media(file.toURI().toString());
                     mediaPlayer = new MediaPlayer(media);
@@ -91,7 +96,9 @@ public class MediaManager {
 
                     // Optionally, play the video automatically once selected
                     mediaPlayer.play();
-                } catch (Exception ex) {
+                }
+                catch (Exception ex)
+                {
                     System.out.println("Error loading video: " + ex.getMessage());
                     mediaLabel.setText("Error: Unsupported video format.");
                 }
@@ -99,12 +106,15 @@ public class MediaManager {
         });
 
         // Music button functionality
-        musicButton.setOnAction(e -> {
+        musicButton.setOnAction(e ->
+        {
             FileChooser fileChooser = new FileChooser();
             fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Music Files", "*.mp3", "*.wav"));
             File file = fileChooser.showOpenDialog(null);
-            if (file != null) {
-                try {
+            if (file != null)
+            {
+                try 
+                {
                     // Load music into MediaPlayer
                     Media media = new Media(file.toURI().toString());
                     mediaPlayer = new MediaPlayer(media);
@@ -117,7 +127,9 @@ public class MediaManager {
                     canvasManager.getRootContainer().getChildren().add(mediaLabel);  // Add label with media name
                     mediaLabel.setText("Music: " + file.getName());
                     System.out.println("Music selected: " + file.getAbsolutePath());
-                } catch (Exception ex) {
+                }
+                catch (Exception ex)
+                {
                     System.out.println("Error loading music: " + ex.getMessage());
                     mediaLabel.setText("Error: Unsupported music format.");
                 }
@@ -125,7 +137,8 @@ public class MediaManager {
         });
 
         // Clear button functionality
-        clearButton.setOnAction(e -> {
+        clearButton.setOnAction(e ->
+        {
             // Remove all media from the canvas
             canvasManager.getRootContainer().getChildren().clear();
             mediaLabel.setText("Media cleared.");
@@ -139,27 +152,37 @@ public class MediaManager {
     // Add double-click resizing to the image
     private void addDoubleClickResize(ImageView imageView)
     {
-        imageView.setOnMouseClicked(event -> {
-            if (event.getClickCount() == 2) {  // Detect double-click
+        imageView.setOnMouseClicked(event ->
+        {
+            if (event.getClickCount() == 2)
+            {  // Detect double-click
                 // Open a dialog to resize the image
                 TextInputDialog widthDialog = new TextInputDialog(String.valueOf(imageView.getFitWidth()));
                 widthDialog.setHeaderText("Enter new width:");
-                widthDialog.showAndWait().ifPresent(width -> {
-                    try {
+                widthDialog.showAndWait().ifPresent(width ->
+                {
+                    try
+                    {
                         double newWidth = Double.parseDouble(width);
                         imageView.setFitWidth(newWidth);
-                    } catch (NumberFormatException ex) {
+                    }
+                    catch (NumberFormatException ex)
+                    {
                         System.out.println("Invalid width value");
                     }
                 });
 
                 TextInputDialog heightDialog = new TextInputDialog(String.valueOf(imageView.getFitHeight()));
                 heightDialog.setHeaderText("Enter new height:");
-                heightDialog.showAndWait().ifPresent(height -> {
-                    try {
+                heightDialog.showAndWait().ifPresent(height ->
+                {
+                    try
+                    {
                         double newHeight = Double.parseDouble(height);
                         imageView.setFitHeight(newHeight);
-                    } catch (NumberFormatException ex) {
+                    }
+                    catch (NumberFormatException ex)
+                    {
                         System.out.println("Invalid height value");
                     }
                 });
@@ -168,23 +191,28 @@ public class MediaManager {
     }
 
     // Create media controls (play/pause, volume control)
-    public HBox createMediaControls() {
+    public HBox createMediaControls()
+    {
         HBox mediaControls = new HBox(10);
 
         Button playButton = new Button("Play");
         Button pauseButton = new Button("Pause");
 
         // Play button functionality
-        playButton.setOnAction(e -> {
-            if (mediaPlayer != null) {
+        playButton.setOnAction(e ->
+        {
+            if (mediaPlayer != null)
+            {
                 mediaPlayer.play();
 
             }
         });
 
         // Pause button functionality
-        pauseButton.setOnAction(e -> {
-            if (mediaPlayer != null) {
+        pauseButton.setOnAction(e ->
+        {
+            if (mediaPlayer != null)
+            {
                 mediaPlayer.pause();
 
             }
@@ -196,7 +224,8 @@ public class MediaManager {
     }
 
     // Create music controls (e.g., volume control)
-    public HBox createMusicControls() {
+    public HBox createMusicControls()
+    {
         HBox musicControls = new HBox(10);
 
         Label volumeLabel = new Label("Volume");
@@ -206,8 +235,10 @@ public class MediaManager {
         volumeSlider.setShowTickLabels(true);
 
         // Adjust media volume when slider is moved
-        volumeSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
-            if (mediaPlayer != null) {
+        volumeSlider.valueProperty().addListener((observable, oldValue, newValue) ->
+        {
+            if (mediaPlayer != null)
+            {
                 mediaPlayer.setVolume(newValue.doubleValue() / 100);
             }
         });
@@ -216,7 +247,8 @@ public class MediaManager {
         Button nextTrackButton = new Button("Next");
 
 
-        nextTrackButton.setOnAction(e -> {
+        nextTrackButton.setOnAction(e -> 
+        {
             // Action for next track (you can modify this to actually change tracks)
             System.out.println("Next track clicked!");
         });
