@@ -26,7 +26,7 @@ public class WhiteBoard extends Application
         // Create main layout
         root = new BorderPane();
         Scene scene = new Scene(root, 1000, 700);
-        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/styles.css")).toExternalForm());
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/Styles.css")).toExternalForm());
 
         // Setup UI components
         setupUI();
