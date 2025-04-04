@@ -319,12 +319,15 @@ public class CanvasManager
         double y = e.getY();
         GraphicsContext gc = activeCanvas.getGraphicsContext2D();
 
-        if (currentTool.equals("PEN")) {
+        if (currentTool.equals("PEN")) 
+        {
             gc.setStroke(currentColor);
             gc.setLineWidth(currentBrushSize);
             gc.lineTo(x, y);
             gc.stroke();
-        } else if (currentTool.equals("ERASER")) {
+        }
+        else if (currentTool.equals("ERASER")) 
+        {
             gc.setStroke(Color.WHITE);
             gc.setLineWidth(currentBrushSize);
             gc.lineTo(x, y);
@@ -332,7 +335,8 @@ public class CanvasManager
         }
     }
 
-    private void handleMouseReleased(MouseEvent e) {
+    private void handleMouseReleased(MouseEvent e) 
+    {
         if (isTextInputActive) return;
 
         double endX = e.getX();
@@ -434,9 +438,11 @@ public class CanvasManager
         layerListView.getSelectionModel().select(0);
         layerListView.getStyleClass().add("layer-list");
 
-        layerListView.getSelectionModel().selectedItemProperty().addListener((obs, old, newVal) -> {
+        layerListView.getSelectionModel().selectedItemProperty().addListener((obs, old, newVal) -> 
+        {
             int selectedIndex = layerListView.getSelectionModel().getSelectedIndex();
-            if (selectedIndex >= 0 && selectedIndex < layers.size()) {
+            if (selectedIndex >= 0 && selectedIndex < layers.size()) 
+            {
                 activeCanvas = layers.get(selectedIndex);
             }
         });
@@ -455,7 +461,8 @@ public class CanvasManager
         return controls;
     }
 
-    private void addLayer() {
+    private void addLayer() 
+    {
         Canvas newLayer = createNewCanvasLayer();
         layers.add(newLayer);
         canvasPane.getChildren().add(newLayer);
@@ -465,21 +472,27 @@ public class CanvasManager
         layerListView.getSelectionModel().select(layers.size() - 1);
     }
 
-    private void removeLayer() {
+    private void removeLayer() 
+    {
         int selectedIndex = layerListView.getSelectionModel().getSelectedIndex();
-        if (selectedIndex >= 0 && selectedIndex < layers.size()) {
-            if (layers.size() > 1) {
+        if (selectedIndex >= 0 && selectedIndex < layers.size()) 
+        {
+            if (layers.size() > 1) 
+            {
                 canvasPane.getChildren().remove(layers.get(selectedIndex));
                 layers.remove(selectedIndex);
                 layerListView.getItems().remove(selectedIndex);
                 layerListView.getSelectionModel().select(Math.min(selectedIndex, layers.size() - 1));
-            } else {
+            }
+            else
+            {
                 showAlert("Layer Error", "Cannot remove the last layer");
             }
         }
     }
 
-    public HBox createStickyControls() {
+    public HBox createStickyControls()
+    {
         HBox controls = new HBox(10);
         controls.getStyleClass().add("sticky-controls");
 
